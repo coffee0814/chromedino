@@ -38,27 +38,7 @@ function startTimer() {
     }, 1000);
 }
 
-// 障害物を動かす
-function moveObstacle() {
-    let obstaclePosition = 800;  // 右端から生成
-    obstacle.style.right = obstaclePosition + "px";  // 初期位置を設定
-    let interval = setInterval(() => {
-        if (!isGameOver) {
-            obstaclePosition -= 10;  // 障害物を左に移動
-            obstacle.style.right = obstaclePosition + "px";  // 障害物の位置を更新
 
-            // 障害物が画面外に出たら再生成
-            if (obstaclePosition < -30) {
-                obstaclePosition = 800;  // 右端に戻す
-            }
-
-            // プレイヤーと障害物の衝突判定
-            if (obstaclePosition > 50 && obstaclePosition < 90 && playerPosition <= 40) {
-                gameOver(interval);
-            }
-        }
-    }, 20);
-}
 
 
 // 障害物を動かす
