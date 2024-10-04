@@ -67,7 +67,7 @@ function moveObstacle() {
     let obstaclePosition = 800;  // 右端から生成
     let interval = setInterval(() => {
         if (!isGameOver) {
-            obstaclePosition = 10;  // 障害物を左に移動
+            obstaclePosition += 10;  // 障害物を左に移動
             obstacle.style.right = obstaclePosition + "px";  // 障害物の位置を更新
 
             // 障害物が画面外に出たら再生成
