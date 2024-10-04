@@ -144,7 +144,9 @@
 
         function createObstacle() {
             const dinoHeight = 40; // プレイヤーの高さ
-            const obstacleHeight = Math.floor(Math.random() * (dinoHeight * 1.5 - dinoHeight * 0.5 + 1)) + dinoHeight * 0.5; // 0.5倍から1.5倍の範囲
+            const minHeight = dinoHeight * 0.5; // 最小高さ
+            const maxHeight = dinoHeight * 1.5; // 最大高さ
+            const obstacleHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight; // 高さをランダムに生成
             const obstacle = document.createElement('div');
             obstacle.className = 'obstacle';
             obstacle.style.left = '800px'; // 画面の右端から出現
