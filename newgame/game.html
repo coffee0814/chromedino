@@ -93,7 +93,7 @@
         let obstacleCreationInterval; // 障害物生成のインターバルID
 
         document.addEventListener('keydown', (event) => {
-            if (event.code === 'Space') {
+            if (event.code === 'Enter') { // スタートキーをエンターに変更
                 if (!gameStarted) {
                     startGame(); // ゲームを開始
                 } else if (!isJumping) {
@@ -114,7 +114,7 @@
             isJumping = true;
             let jumpHeight = 0;
             const jumpInterval = setInterval(() => {
-                if (jumpHeight >= 100) { // プレイヤーの高さの1倍に設定
+                if (jumpHeight >= 80) { // プレイヤーの高さの2倍に設定
                     clearInterval(jumpInterval);
                     fall();
                 } else {
@@ -190,6 +190,8 @@
         function endGame() {
             clearInterval(gameTimer);
             clearInterval(obstacleCreationInterval); // 障害物生成を停止
+            const obstacles = document.querySelectorAll('.obstacle');
+            obstacles.forEach(obstacle => obstacle.remove()); // すべての障害物を削除
             messageDisplay.textContent = `Game Over! Your score: ${score}, Time: ${timeElapsed}s`;
             messageDisplay.style.display = 'block'; // ゲームオーバーメッセージを表示
             gameStarted = false; // ゲーム終了フラグを立てる
@@ -203,7 +205,7 @@
             collisionCountDisplay.textContent = `Collisions Left: ${collisionCount}`;
             timerDisplay.textContent = `Time: ${timeElapsed}s`;
             dino.style.bottom = '0px'; // プレイヤーの位置をリセット
-            messageDisplay.textContent = "Press Space to Start!"; // スタートメッセージを表示
+            messageDisplay.textContent = "Press Enter to Start!"; // スタートメッセージを表示
             messageDisplay.style.display = 'block'; // メッセージを表示
         }
 
@@ -215,9 +217,7 @@
         function startCreatingObstacles() {
             obstacleCreationInterval = setInterval(() => {
                 createObstacle();
-                const interval = Math.random() * (3000 - 2000) + 2000;
-                setTimeout(startCreatingObstacles, interval);
-            }, 2000); // 障害物を最初に2秒ごとに生成
+            }, 2000); // 障害物を2秒ごとに生成
         }
 
         // ゲーム開始時のメッセージ表示
