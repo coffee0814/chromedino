@@ -1,1 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrome Dino Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+        #gameCanvas {
+            background: #fff;
+            border: 1px solid #000;
+            position: relative;
+            overflow: hidden;
+        }
+        .dino {
+            width: 40px;
+            height: 40px;
+            background-color: #4CAF50;
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+        }
+        .obstacle {
+            width: 20px;
+            height: 40px;
+            background-color: #FF5722;
+            position: absolute;
+            bottom: 0;
+        }
+        #score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameCanvas" style="width: 800px; height: 400px;">
+        <div class="dino" id="dino"></div>
+        <div id="score">Score: 0</div>
+    </div>
+
+    <script>
+        const dino = document.getElementById('dino');
+        const gameCanvas = document.getElementById('gameCanvas');
+        const scoreDisplay = document.getElementById('score');
+        let isJumping = false;
+        let score = 0;
+        let obstacleSpeed = 5;
+
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space' && !isJumping) {
+                jump();
+            }
+        });
+
+        function jump() {
+            isJumping = true;
+            let jumpHeight = 0;
+            const jumpInterval = setInterval(() => {
+                if (jumpHeight >= 100) {
+                    clearInterval(jumpInterval);
+                    fall();
+                } else {
+                    jumpHeight += 10;
+                    dino.style.bottom = `${jumpHeight}px`;
+                }
+            }, 20);
+        }
+
+        function fall() {
+            const fallInterval = setInterval(() => {
+                if (parseInt(dino.style.bottom) <= 0) {
+                    clearInterval(fallInterval);
+                    isJumping = false;
+                    dino.style.bottom = '0px';
+                } else {
+                    dino.style.bottom = `${parseInt(dino.style.bottom) - 10}px`;
+                }
+            }, 20);
+        }
+
+        function createObstacle() {
+            const obstacle = document.createElement('div');
+            obstacle.className = 'obstacle';
+            obstacle.style.left = '800px';
+            gameCanvas.appendChild(obstacle);
+            moveObstacle(obstacle);
+        }
+
+        function moveObstacle(obstacle) {
+            const obstacleInterval = setInterval(() => {
+                const obstaclePosition = parseInt(obstacle.style.left);
+                if (obstaclePosition < -20) {
+                    clearInterval(obstacleInterval);
+                    obstacle.remove();
+                    score++;
+                    scoreDisplay.textContent = `Score: ${score}`;
+                } else {
+                    obstacle.style.left = `${obstaclePosition - obstacleSpeed}px`;
+                }
+                checkCollision(obstacle, obstacleInterval);
+            }, 20);
+        }
+
+        function checkCollision(obstacle, obstacleInterval) {
+            const dinoRect = dino.getBoundingClientRect();
+            const obstacleRect = obstacle.getBoundingClientRect();
+            if (
+                dinoRect.x < obstacleRect.x + obstacleRect.width &&
+                dinoRect.x + dinoRect.width > obstacleRect.x &&
+                dinoRect.y < obstacleRect.y + obstacleRect.height &&
+                dinoRect.height + dinoRect.y > obstacleRect.y
+            ) {
+                clearInterval(obstacleInterval);
+                alert('Game Over! Your score: ' + score);
+                location.reload();
+            }
+        }
+
+        setInterval(createObstacle, 2000);
+    </script>
+</body>
+</html>
 
