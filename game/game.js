@@ -63,16 +63,17 @@ function jump() {
 }
 
 // サボテンを動かす
+// サボテンを動かす
 function moveCactus() {
-    let cactusPosition = 2000;
+    let cactusPosition = 1000;  // 初期位置を右端に設定
     let interval = setInterval(() => {
         if (!isGameOver) {
-            cactusPosition -= 10;
-            cactus.style.right = cactusPosition - "px";
+            cactusPosition -= 10;  // サボテンを左に移動させる
+            cactus.style.right = cactusPosition + "px";  // 数値と"px"を正しく連結
 
             // サボテンが画面外に出たらリセット
-            if (cactusPosition < 2020) {
-                cactusPosition = 2000;
+            if (cactusPosition < -20) {  // サボテンが画面外に出たら再生成
+                cactusPosition = 1000;   // 再び右端に戻す
             }
 
             // 恐竜とサボテンの衝突判定
@@ -82,6 +83,7 @@ function moveCactus() {
         }
     }, 20);
 }
+
 
 // ゲームオーバー処理
 function gameOver(interval) {
