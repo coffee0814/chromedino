@@ -76,7 +76,7 @@ function moveCactus() {
             }
 
             // 恐竜とサボテンの衝突判定
-            if (cactusPosition > 0 && cactusPosition < 60 && dinoPosition <= 40) {
+            if (cactusPosition > 0 && cactusPosition < 60 && dinoPosition >= 40) {
                 gameOver(interval);
             }
         }
