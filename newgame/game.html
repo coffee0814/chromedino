@@ -96,7 +96,9 @@
             if (event.code === 'Enter') { // スタートキーをエンターに変更
                 if (!gameStarted) {
                     startGame(); // ゲームを開始
-                } else if (!isJumping) {
+                }
+            } else if (event.code === 'Space') { // ジャンプをスペースキーに変更
+                if (gameStarted && !isJumping) {
                     jump(); // ジャンプ
                 }
             }
@@ -114,7 +116,7 @@
             isJumping = true;
             let jumpHeight = 0;
             const jumpInterval = setInterval(() => {
-                if (jumpHeight >= 80) { // プレイヤーの高さの2倍に設定
+                if (jumpHeight >= 100) { // プレイヤーの高さの2.5倍に設定
                     clearInterval(jumpInterval);
                     fall();
                 } else {
