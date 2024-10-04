@@ -33,6 +33,15 @@ body {
     border-radius: 5px;
 }
 
+@keyframes moveObstacle {
+    0% {
+        right: 800px;  /* 画面の右端から始まる */
+    }
+    100% {
+        right: -30px;  /* 画面外に出る位置 */
+    }
+}
+
 .obstacle {
     position: absolute;
     bottom: 0;
@@ -40,6 +49,7 @@ body {
     width: 30px;
     height: 40px;
     background-color: green;
+    animation: moveObstacle 2s linear infinite;  /* 2秒で移動し、無限に繰り返す */
 }
 
 .info {
