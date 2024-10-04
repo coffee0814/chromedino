@@ -1,1 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.game-area {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    border: 2px solid #333;
+    background-color: white;
+    overflow: hidden;
+}
+
+.dino {
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    width: 40px;
+    height: 40px;
+    background-color: #555;
+    border-radius: 5px;
+}
+
+.cactus {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 40px;
+    background-color: green;
+}
 
