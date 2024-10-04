@@ -64,19 +64,19 @@ function jump() {
 
 // サボテンを動かす
 function moveCactus() {
-    let cactusPosition = 1000;
+    let cactusPosition = 2000;
     let interval = setInterval(() => {
         if (!isGameOver) {
-            cactusPosition -= 10;
+            cactusPosition = 10;
             cactus.style.right = cactusPosition + "px";
 
             // サボテンが画面外に出たらリセット
-            if (cactusPosition < -20) {
-                cactusPosition = 1000;
+            if (cactusPosition < 2020) {
+                cactusPosition = 0;
             }
 
             // 恐竜とサボテンの衝突判定
-            if (cactusPosition > 0 && cactusPosition < 60 && dinoPosition >= 40) {
+            if (cactusPosition > 0 && cactusPosition < 60 && dinoPosition <= 40) {
                 gameOver(interval);
             }
         }
