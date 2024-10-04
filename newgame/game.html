@@ -28,11 +28,10 @@
             left: 50px;
         }
         .obstacle {
-            width: 0; /* Width is set to 0 for triangle */
-            height: 0; /* Height is set to 0 for triangle */
-            border-left: 10px solid transparent; /* Left triangle */
-            border-right: 10px solid transparent; /* Right triangle */
-            border-bottom: 40px solid #FF5722; /* Triangle color */
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
             position: absolute;
             bottom: 0;
         }
@@ -52,8 +51,8 @@
         }
         #collisionCount {
             position: absolute;
-            top: 40px;
-            left: 10px;
+            top: 10px;
+            left: 200px;
             font-size: 20px;
             font-family: Arial, sans-serif;
         }
@@ -64,7 +63,7 @@
         <div class="dino" id="dino"></div>
         <div id="score">Score: 0</div>
         <div id="timer">Time: 0s</div>
-        <div id="collisionCount">Remaining Collisions: 2</div> <!-- 衝突可能回数を表示 -->
+        <div id="collisionCount">Collisions Left: 2</div>
     </div>
 
     <script>
@@ -72,13 +71,13 @@
         const gameCanvas = document.getElementById('gameCanvas');
         const scoreDisplay = document.getElementById('score');
         const timerDisplay = document.getElementById('timer');
-        const collisionCountDisplay = document.getElementById('collisionCount'); // 衝突可能回数の表示
+        const collisionCountDisplay = document.getElementById('collisionCount');
         let isJumping = false;
         let score = 0;
         let obstacleSpeed = 5;
         let timeElapsed = 0;
         let gameTimer;
-        let collisionCount = 2; // 衝突可能回数を2に設定
+        let collisionCount = 2;
 
         document.addEventListener('keydown', (event) => {
             if (event.code === 'Space' && !isJumping) {
@@ -90,7 +89,7 @@
             isJumping = true;
             let jumpHeight = 0;
             const jumpInterval = setInterval(() => {
-                if (jumpHeight >= 100) {
+                if (jumpHeight >= 100 * 2.5) { // プレイヤーの高さの2.5倍に設定
                     clearInterval(jumpInterval);
                     fall();
                 } else {
@@ -98,13 +97,12 @@
                     dino.style.bottom = `${jumpHeight}px`;
                 }
             }, 20);
-            // ジャンプを0.5秒長くする
             setTimeout(() => {
                 if (isJumping) {
                     clearInterval(jumpInterval);
                     fall();
                 }
-            }, 1000); // 500ms + 500ms
+            }, 1000);
         }
 
         function fall() {
@@ -120,9 +118,11 @@
         }
 
         function createObstacle() {
+            const obstacleHeight = Math.floor(Math.random() * (60 - 20 + 1)) + 20; // 20pxから60pxのランダムな高さ
             const obstacle = document.createElement('div');
             obstacle.className = 'obstacle';
             obstacle.style.left = '800px';
+            obstacle.style.borderBottom = `${obstacleHeight}px solid #FF5722`; // ランダムな高さの三角形に設定
             gameCanvas.appendChild(obstacle);
             moveObstacle(obstacle);
         }
@@ -151,10 +151,10 @@
                 dinoRect.y < obstacleRect.y + obstacleRect.height &&
                 dinoRect.height + dinoRect.y > obstacleRect.y
             ) {
-                collisionCount--; // 衝突回数を減らす
+                collisionCount--;
                 clearInterval(obstacleInterval);
                 obstacle.remove(); // 衝突後に障害物を削除
-                collisionCountDisplay.textContent = `Remaining Collisions: ${collisionCount}`; // 表示を更新
+                collisionCountDisplay.textContent = `Collisions Left: ${collisionCount}`;
 
                 if (collisionCount <= 0) {
                     clearInterval(gameTimer);
@@ -169,17 +169,15 @@
             timerDisplay.textContent = `Time: ${timeElapsed}s`;
         }
 
-        // ゲーム開始時にタイマーを開始
         gameTimer = setInterval(updateTimer, 1000);
 
-        // ランダムな間隔で障害物を作成
         function startCreatingObstacles() {
             createObstacle();
-            const interval = Math.random() * (3000 - 2000) + 2000; // 2000ms から 3000ms のランダムな間隔
+            const interval = Math.random() * (3000 - 2000) + 2000;
             setTimeout(startCreatingObstacles, interval);
         }
 
-        startCreatingObstacles(); // 障害物作成を開始
+        startCreatingObstacles();
     </script>
 </body>
 </html>
