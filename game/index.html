@@ -3,18 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chrome Dino 風ゲーム</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Chrome Dino Game</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="game-area">
-        <div id="player" class="player"></div>
-        <div id="obstacle" class="obstacle"></div>
+        <div class="player" id="player"></div>
+        <div class="obstacle" id="obstacle"></div>
     </div>
-    <div class="info">
-        <p>スペースキーでゲーム開始</p>
-        <p>タイマー: <span id="timer">0</span>秒</p>
-    </div>
-    <script src="game.js"></script>
+    <div id="timer">タイマー: <span id="time">0</span>秒</div>
+    <script src="script.js"></script>
 </body>
 </html>
