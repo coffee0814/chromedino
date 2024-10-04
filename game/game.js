@@ -67,12 +67,12 @@ function moveCactus() {
     let cactusPosition = 2000;
     let interval = setInterval(() => {
         if (!isGameOver) {
-            cactusPosition = 10;
-            cactus.style.right = cactusPosition + "px";
+            cactusPosition -= 10;
+            cactus.style.right = cactusPosition - "px";
 
             // サボテンが画面外に出たらリセット
             if (cactusPosition < 2020) {
-                cactusPosition = 0;
+                cactusPosition = 2000;
             }
 
             // 恐竜とサボテンの衝突判定
