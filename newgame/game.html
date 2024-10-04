@@ -143,11 +143,12 @@
         }
 
         function createObstacle() {
-            const obstacleHeight = Math.floor(Math.random() * (60 - 20 + 1)) + 20; // 20pxから60pxのランダムな高さ
+            const dinoHeight = 40; // プレイヤーの高さ
+            const obstacleHeight = Math.floor(Math.random() * (dinoHeight * 1.5 - dinoHeight * 0.5 + 1)) + dinoHeight * 0.5; // 0.5倍から1.5倍の範囲
             const obstacle = document.createElement('div');
             obstacle.className = 'obstacle';
-            obstacle.style.left = '800px';
-            obstacle.style.borderBottom = `${obstacleHeight}px solid #FF5722`; // ランダムな高さの三角形に設定
+            obstacle.style.left = '800px'; // 画面の右端から出現
+            obstacle.style.borderBottom = `${obstacleHeight}px solid #FF5722`; // 障害物の高さを設定
             gameCanvas.appendChild(obstacle);
             moveObstacle(obstacle);
         }
@@ -216,7 +217,7 @@
 
         function startCreatingObstacles() {
             obstacleCreationInterval = setInterval(() => {
-                createObstacle();
+                createObstacle(); // 固定の高さの障害物を生成
             }, 2000); // 障害物を2秒ごとに生成
         }
 
