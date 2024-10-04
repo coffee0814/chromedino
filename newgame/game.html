@@ -90,6 +90,7 @@
         let gameTimer;
         let collisionCount = 2;
         let gameStarted = false; // ゲーム開始フラグ
+        let obstacleCreationInterval; // 障害物生成のインターバルID
 
         document.addEventListener('keydown', (event) => {
             if (event.code === 'Space') {
@@ -103,6 +104,7 @@
 
         function startGame() {
             gameStarted = true; // ゲーム開始フラグを立てる
+            resetGame(); // ゲームの状態をリセット
             messageDisplay.style.display = 'none'; // メッセージを非表示
             gameTimer = setInterval(updateTimer, 1000); // タイマーを開始
             startCreatingObstacles(); // 障害物作成を開始
@@ -187,10 +189,10 @@
 
         function endGame() {
             clearInterval(gameTimer);
+            clearInterval(obstacleCreationInterval); // 障害物生成を停止
             messageDisplay.textContent = `Game Over! Your score: ${score}, Time: ${timeElapsed}s`;
             messageDisplay.style.display = 'block'; // ゲームオーバーメッセージを表示
             gameStarted = false; // ゲーム終了フラグを立てる
-            resetGame(); // ゲームをリセット
         }
 
         function resetGame() {
@@ -211,9 +213,11 @@
         }
 
         function startCreatingObstacles() {
-            createObstacle();
-            const interval = Math.random() * (3000 - 2000) + 2000;
-            setTimeout(startCreatingObstacles, interval);
+            obstacleCreationInterval = setInterval(() => {
+                createObstacle();
+                const interval = Math.random() * (3000 - 2000) + 2000;
+                setTimeout(startCreatingObstacles, interval);
+            }, 2000); // 障害物を最初に2秒ごとに生成
         }
 
         // ゲーム開始時のメッセージ表示
