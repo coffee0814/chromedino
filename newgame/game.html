@@ -41,21 +41,32 @@
             font-size: 20px;
             font-family: Arial, sans-serif;
         }
+        #timer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
     <div id="gameCanvas" style="width: 800px; height: 400px;">
         <div class="dino" id="dino"></div>
         <div id="score">Score: 0</div>
+        <div id="timer">Time: 0s</div>
     </div>
 
     <script>
         const dino = document.getElementById('dino');
         const gameCanvas = document.getElementById('gameCanvas');
         const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
         let isJumping = false;
         let score = 0;
         let obstacleSpeed = 5;
+        let timeElapsed = 0;
+        let gameTimer;
 
         document.addEventListener('keydown', (event) => {
             if (event.code === 'Space' && !isJumping) {
@@ -122,13 +133,20 @@
                 dinoRect.height + dinoRect.y > obstacleRect.y
             ) {
                 clearInterval(obstacleInterval);
+                clearInterval(gameTimer);
                 alert('Game Over! Your score: ' + score);
                 location.reload();
             }
         }
 
+        function updateTimer() {
+            timeElapsed++;
+            timerDisplay.textContent = `Time: ${timeElapsed}s`;
+        }
+
+        // ゲーム開始時にタイマーを開始
+        gameTimer = setInterval(updateTimer, 1000);
         setInterval(createObstacle, 2000);
     </script>
 </body>
 </html>
-
