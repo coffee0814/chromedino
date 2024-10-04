@@ -67,6 +67,7 @@
         let obstacleSpeed = 5;
         let timeElapsed = 0;
         let gameTimer;
+        let collisionCount = 0; // 衝突回数をカウントする変数
 
         document.addEventListener('keydown', (event) => {
             if (event.code === 'Space' && !isJumping) {
@@ -132,10 +133,15 @@
                 dinoRect.y < obstacleRect.y + obstacleRect.height &&
                 dinoRect.height + dinoRect.y > obstacleRect.y
             ) {
+                collisionCount++; // 衝突回数を増やす
                 clearInterval(obstacleInterval);
-                clearInterval(gameTimer);
-                alert('Game Over! Your score: ' + score);
-                location.reload();
+                obstacle.remove(); // 衝突後に障害物を削除
+
+                if (collisionCount >= 2) {
+                    clearInterval(gameTimer);
+                    alert('Game Over! Your score: ' + score);
+                    location.reload();
+                }
             }
         }
 
